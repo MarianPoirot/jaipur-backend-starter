@@ -1,5 +1,14 @@
 name: Continuous integration
 on: [push]
+  push:
+    branches:
+        #Push events on main
+        - master
+        #Push events on feature/**
+        - 'feature/**'
+  pull request:
+    branches:
+        - 'feature/**'
 jobs:
   test:
     runs-on: ubuntu-latest
