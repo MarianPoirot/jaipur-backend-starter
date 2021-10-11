@@ -6,12 +6,12 @@ const router = express.Router()
 // Listen to POST /games
 router.post("/", function (req, res) {
   // TODO return 400 if req.body.name doesn't exist
-  try { 
+  try {
     const newGame = gameService.createGame(req.body.name)
     res.status(201).json(newGame)
   } catch (error) {
-    res.status(400).json(newGame)
-  } 
+    res.status(400).json("Missing name parameter")
+  }
 })
 
 export default router

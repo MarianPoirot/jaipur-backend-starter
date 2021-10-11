@@ -3,17 +3,17 @@ import { shuffle } from "lodash"
 
 // Return a shuffled starting deck except 3 camels
 export function initDeck() {
-    let i
-    const deck=[]
-    for (i=0;i<6;i++) deck.push("diamonds")
-    for (i=0;i<6;i++) deck.push("gold")
-    for (i=0;i<6;i++) deck.push("silver")
-    for (i=0;i<8;i++) deck.push("cloth")
-    for (i=0;i<8;i++) deck.push("spice")
-    for (i=0;i<10;i++) deck.push("leather")
-    for (i=0;i<11-3;i++) deck.push("camel")
-    
-    return shuffle(deck)
+  let i
+  const deck = []
+  for (i = 0; i < 6; i++) deck.push("diamonds")
+  for (i = 0; i < 6; i++) deck.push("gold")
+  for (i = 0; i < 6; i++) deck.push("silver")
+  for (i = 0; i < 8; i++) deck.push("cloth")
+  for (i = 0; i < 8; i++) deck.push("spice")
+  for (i = 0; i < 10; i++) deck.push("leather")
+  for (i = 0; i < 11 - 3; i++) deck.push("camel")
+
+  return shuffle(deck)
 }
 
 // Draw {count} cards of a deck
@@ -36,7 +36,7 @@ export function putCamelsFromHandToHerd(game) {
     }
   })
 }
-/*let i
+/* let i
   for (let j=0;j<2;j++)
     i=0
     while (game._players[j].hand!==null){
@@ -45,10 +45,7 @@ export function putCamelsFromHandToHerd(game) {
         game._players[j].camelsCount+=1
       }
       i++
-  }*/
-
-
-
+  } */
 
 // Create a game object
 export function createGame(name) {
@@ -68,24 +65,23 @@ export function createGame(name) {
     // joueur courant (0 ou 1)
     currentPlayerIndex: 0,
     tokens: {
-        diamonds: [7,7,5,5,5],
-        gold: [6,6,5,5,5],
-        silver: [5,5,5,5,5],
-        cloth: [5,3,3,2,2,1,1],
-        spice: [5,3,3,2,2,1,1],
-        leather: [4,3,2,1,1,1,1,1,1],
+      diamonds: [7, 7, 5, 5, 5],
+      gold: [6, 6, 5, 5, 5],
+      silver: [5, 5, 5, 5, 5],
+      cloth: [5, 3, 3, 2, 2, 1, 1],
+      spice: [5, 3, 3, 2, 2, 1, 1],
+      leather: [4, 3, 2, 1, 1, 1, 1, 1, 1],
     },
     // ne pas oublier de les mélanger au début de la partie
     _bonusTokens: {
-        3: shuffle[2,1,2,3,1,2,3],
-        4: shuffle[4,6,6,4,5,5],
-        5: shuffle[8,10,9,8,10]
+      3: shuffle([2, 1, 2, 3, 1, 2, 3]),
+      4: shuffle([4, 6, 6, 4, 5, 5]),
+      5: shuffle([8, 10, 9, 8, 10]),
     },
     // est-ce que la partie est terminée?
-    isDone: false
+    isDone: false,
   }
   putCamelsFromHandToHerd(game)
   databaseService.saveGame(game)
   return game
 }
-

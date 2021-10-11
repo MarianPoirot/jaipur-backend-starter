@@ -1,49 +1,29 @@
-import { expectCt } from "helmet"
 import * as gameService from "./gameService"
 
-
-//Shuffle est la seule fonction impure
+// Shuffle est la seule fonction impure
 
 describe("Game service", () => {
   test("should init a deck", () => {
-    let deck=gameService.initDeck()
-    const game= {
-        _deck: deck,
-        tokens: {
-            diamonds: [7,7,5,5,5],
-            gold: [6,6,5,5,5],
-            silver: [5,5,5,5,5],
-            cloth: [5,3,3,2,2,1,1],
-            spice: [5,3,3,2,2,1,1],
-            leather: [4,3,2,1,1,1,1,1,1],
-        },
-    }
-    //,goldCount=0,silverCount=0,clothCount=0,spiceCount=0,leatherCount=0,camelCount=0
-    const diamonds=deck.filter(Cards => Cards === "diamonds")   
-    const diamondsCount=diamonds.length
+    const deck = gameService.initDeck()
+    //, goldCount=0,silverCount=0,clothCount=0,spiceCount=0,leatherCount=0,camelCount=0
+    const diamonds = deck.filter((Cards) => Cards === "diamonds")
+    const diamondsCount = diamonds.length
 
     expect(diamondsCount).toBe(6)
   })
 
   test("should draw cards", () => {
     const deck = gameService.initDeck()
-    const game= {
-        _deck: deck,
-        _players:[
-            { hand: [] },
-            { hand: [] },
-        ],
-    }
-    const Cards=gameService.drawCards(deck,1)
-    expect(Cards[0]!==0)
+    const Cards = gameService.drawCards(deck, 1)
+    expect(Cards[0]).not.toBe(0)
   })
 
   test("should put camels from hand to herd", () => {
-    const game= {
-        _players:[
-            { hand: ["camel","gold"],camelsCount: 0},
-            { hand: ["gold","gold"], camelsCount: 0},
-        ],
+    const game = {
+      _players: [
+        { hand: ["camel", "gold"], camelsCount: 0 },
+        { hand: ["gold", "gold"], camelsCount: 0 },
+      ],
     }
     gameService.putCamelsFromHandToHerd(game)
 
@@ -52,15 +32,14 @@ describe("Game service", () => {
     expect(game._players[0].camelsCount).toBe(1)
 
     expect(game._players[1].hand.length).toBe(2)
-    expect(game._players[1].hand).toStrictEqual(["gold","gold"])
+    expect(game._players[1].hand).toStrictEqual(["gold", "gold"])
     expect(game._players[1].camelsCount).toBe(0)
 
-    
-    const game2= {
-        _players:[
-            { hand: ["camel","gold"],camelsCount: 0},
-            { hand: ["camel","camel"], camelsCount: 0},
-        ],
+    const game2 = {
+      _players: [
+        { hand: ["camel", "gold"], camelsCount: 0 },
+        { hand: ["camel", "camel"], camelsCount: 0 },
+      ],
     }
     gameService.putCamelsFromHandToHerd(game2)
 
@@ -71,5 +50,5 @@ describe("Game service", () => {
     expect(game2._players[1].hand.length).toBe(0)
     expect(game2._players[1].hand).toStrictEqual([])
     expect(game2._players[1].camelsCount).toBe(2)
-})
+  })
 })
